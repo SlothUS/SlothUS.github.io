@@ -3,64 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Personal Portfolio</title>
     <style>
         :root {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --text: #f8fafc;
-            --accent: #38bdf8;
+            --primary: #6366f1;
+            --bg: #030712;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
         }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
             margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
-        .container {
-            max-width: 600px;
-            padding: 2rem;
-            text-align: center;
-        }
-        .profile-card {
-            background: var(--card);
-            padding: 3rem;
+
+        .main-card {
+            width: 90%;
+            max-width: 500px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
             border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-        h1 { margin-bottom: 0.5rem; color: var(--accent); }
-        p { color: #94a3b8; font-size: 1.1rem; }
-        .links { margin-top: 2rem; }
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
-            margin: 0.5rem;
-            background: var(--accent);
-            color: var(--bg);
-            text-decoration: none;
+
+        .profile-header { text-align: center; margin-bottom: 2rem; }
+        
+        .profile-header h1 { font-size: 1.8rem; margin: 0.5rem 0; letter-spacing: -0.5px; }
+        
+        .profile-header p { color: #94a3b8; font-size: 0.9rem; }
+
+        /* Tabs Styling */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            cursor: pointer;
+            font-weight: 500;
             border-radius: 8px;
-            font-weight: bold;
-            transition: transform 0.2s;
         }
-        .btn:hover { transform: translateY(-3px); opacity: 0.9; }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Content Area */
+        .content-section { display: none; min-height: 150px; animation: fadeIn 0.4s ease; }
+        .content-section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 10px; padding-left: 1.5rem; position: relative; color: #cbd5e1; }
+        li::before { content: "→"; position: absolute; left: 0; color: var(--primary); }
+
+        .social-footer {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .social-link:hover { color: var(--primary); }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="profile-card">
-            <h1>Hi, I'm [Your Name] 👋</h1>
-            <p>I'm a developer and creator building cool things on the web.</p>
-            <div class="links">
-                <a href="https://github.com/[YourUsername]" class="btn">GitHub</a>
-                <a href="mailto:your@email.com" class="btn">Contact Me</a>
-            </div>
-        </div>
+
+<div class="main-card">
+    <div class="profile-header">
+        <h1>Your Name</h1>
+        <p>Designer & Full-Stack Developer</p>
     </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'about')">About</button>
+        <button class="tab-btn" onclick="openTab(event, 'projects')">Projects</button>
+        <button class="tab-btn" onclick="openTab(event, 'contact')">Contact</button>
+    </div>
+
+    <div id="about" class="content-section active">
+        <p>I specialize in building digital experiences that are as functional as they are beautiful. Based in New York, working globally.</p>
+        <p>Focusing on: React, UI Design, and Motion.</p>
+    </div>
+
+    <div id="projects" class="content-section">
+        <ul>
+            <li><strong>Project Alpha</strong> - A SaaS platform for creators.</li>
+            <li><strong>Nebula UI</strong> - An open-source design system.</li>
+            <li><strong>FinTrack</strong> - Personal finance mobile app.</li>
+        </ul>
+    </div>
+
+    <div id="contact" class="content-section">
+        <p>Looking for a new project or just want to say hi?</p>
+        <p>Email: <strong>hello@domain.com</strong></p>
+        <p>Location: Available Remotely</p>
+    </div>
+
+    <div class="social-footer">
+        <a href="#" class="social-link">Twitter</a>
+        <a href="#" class="social-link">GitHub</a>
+        <a href="#" class="social-link">LinkedIn</a>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, content, tablinks;
+        content = document.getElementsByClassName("content-section");
+        for (i = 0; i < content.length; i++) {
+            content[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
 </body>
 </html>
