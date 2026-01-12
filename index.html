@@ -1,213 +1,345 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Cohere Inspired</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #151515;
-            --card: #1f1f1f;
-            --accent: #ff7759; /* Cohere's signature Bittersweet */
-            --text-main: #f5f5f5;
-            --text-dim: #a0a0a0;
-            --border: rgba(255, 255, 255, 0.08);
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Personal website — resume, intro, contact." />
+    <title>Your Name — Portfolio</title>
 
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-        /* Subtle background glow like Cohere's site */
-        body::before {
-            content: "";
-            position: absolute;
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(255, 119, 89, 0.07) 0%, transparent 70%);
-            top: -100px; right: -100px;
-            z-index: -1;
-        }
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+  </head>
 
-        .container {
-            width: 90%;
-            max-width: 650px;
-            padding: 40px 0;
-        }
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-        .header {
-            margin-bottom: 48px;
-        }
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <a class="brand" href="#top" aria-label="Go to top">
+          <span class="brand-mark" aria-hidden="true">◆</span>
+          <span class="brand-text">Your Name</span>
+        </a>
 
-        .label {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--accent);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            display: block;
-        }
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span class="sr-only">Open menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 500;
-            margin: 0;
-            letter-spacing: -1px;
-        }
+        <nav class="site-nav" id="site-nav">
+          <a href="#about">About</a>
+          <a href="#resume">Resume</a>
+          <a href="#contact">Contact</a>
+          <a class="pill" href="#contact">Hire me</a>
+        </nav>
+      </div>
+    </header>
 
-        /* Nav Tabs - Cohere Style */
-        .nav-container {
-            display: flex;
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 6px;
-            border-radius: 100px; /* Smooth pill shape */
-            margin-bottom: 32px;
-        }
+    <main id="main">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Hi, I’m</p>
+            <h1>Your Name</h1>
+            <p class="lead">
+              I’m a <strong>[Your Role]</strong> who builds <strong>[what you build]</strong>.
+              I like solving problems with clean design and practical engineering.
+            </p>
 
-        .tab-btn {
-            flex: 1;
-            padding: 12px 20px;
-            border: none;
-            background: transparent;
-            color: var(--text-dim);
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 100px;
-            transition: 0.2s ease;
-        }
+            <div class="hero-actions">
+              <a class="btn primary" href="#resume">View Resume</a>
+              <a class="btn" href="#contact">Contact</a>
+              <a class="btn ghost" href="resume.pdf" target="_blank" rel="noopener">Download PDF</a>
+            </div>
 
-        .tab-btn.active {
-            background: #2a2a2a;
-            color: var(--text-main);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
+            <div class="hero-meta">
+              <div class="meta-card">
+                <div class="meta-label">Location</div>
+                <div class="meta-value">Houston, TX</div>
+              </div>
+              <div class="meta-card">
+                <div class="meta-label">Email</div>
+                <div class="meta-value">
+                  <a href="mailto:you@email.com">you@email.com</a>
+                </div>
+              </div>
+              <div class="meta-card">
+                <div class="meta-label">Open to</div>
+                <div class="meta-value">Internships / Full-time</div>
+              </div>
+            </div>
+          </div>
 
-        /* Content Area */
-        .content-box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 40px;
-            min-height: 250px;
-            position: relative;
-        }
+          <div class="hero-card">
+            <div class="avatar" aria-hidden="true">
+              <span>YN</span>
+            </div>
+            <div class="hero-card-body">
+              <h2 class="card-title">Quick intro</h2>
+              <p>
+                Write 2–3 sentences about your focus, what you’re looking for, and what you’re best
+                at. Keep it punchy and friendly.
+              </p>
 
-        .tab-content {
-            display: none;
-            animation: slideUp 0.4s ease forwards;
-        }
+              <ul class="bullets">
+                <li>✅ Strength: [e.g., problem-solving, communication]</li>
+                <li>✅ Focus: [e.g., software, engineering, design]</li>
+                <li>✅ Interests: [e.g., systems, AI, web apps]</li>
+              </ul>
 
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        p {
-            line-height: 1.7;
-            color: var(--text-dim);
-            font-size: 1.1rem;
-        }
-
-        .project-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .project-item:last-child { border: none; }
-
-        .btn-primary {
-            display: inline-block;
-            margin-top: 24px;
-            background: var(--accent);
-            color: #fff;
-            padding: 14px 28px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .btn-primary:hover {
-            filter: brightness(1.1);
-            transform: translateY(-2px);
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="header">
-        <span class="label">Available for Work</span>
-        <h1>Your Name</h1>
-    </div>
-
-    <div class="nav-container">
-        <button class="tab-btn active" onclick="switchTab(event, 'bio')">Bio</button>
-        <button class="tab-btn" onclick="switchTab(event, 'work')">Work</button>
-        <button class="tab-btn" onclick="switchTab(event, 'contact')">Contact</button>
-    </div>
-
-    <div class="content-box">
-        <div id="bio" class="tab-content active">
-            <p>I build intelligent digital experiences that bridge the gap between human creativity and technical precision.</p>
-            <p>Currently focusing on generative interfaces and minimalist design systems.</p>
+              <div class="chips" aria-label="Highlights">
+                <span class="chip">C++</span>
+                <span class="chip">Python</span>
+                <span class="chip">JavaScript</span>
+                <span class="chip">CAD</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div id="work" class="tab-content">
-            <div class="project-item">
-                <span>Neural Interface Redesign</span>
-                <span class="label">2024</span>
-            </div>
-            <div class="project-item">
-                <span>Open Source LLM Tool</span>
-                <span class="label">2023</span>
-            </div>
-            <div class="project-item">
-                <span>E-commerce Framework</span>
-                <span class="label">2023</span>
-            </div>
+        <div class="container">
+          <div class="section-divider"></div>
         </div>
+      </section>
 
-        <div id="contact" class="tab-content">
-            <p>Ready to start a new project or just want to chat about the future of the web?</p>
-            <a href="mailto:hello@yoursite.com" class="btn-primary">Get in touch</a>
+      <!-- ABOUT -->
+      <section class="section" id="about">
+        <div class="container">
+          <div class="section-head">
+            <h2>About</h2>
+            <p>
+              This section is for your longer introduction. Keep it human: what you do, what you
+              care about, and what kind of work you want.
+            </p>
+          </div>
+
+          <div class="two-col">
+            <div class="card">
+              <h3>What I’m good at</h3>
+              <p>
+                Add a short paragraph describing your strengths (projects, teamwork, leadership,
+                technical skills). Mention results when possible.
+              </p>
+              <ul class="checklist">
+                <li>Building reliable, readable solutions</li>
+                <li>Working well in teams and communicating clearly</li>
+                <li>Learning fast and shipping improvements</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>What I’m looking for</h3>
+              <p>
+                Describe the roles you want (internship, entry-level, freelance), and the types of
+                problems you want to work on.
+              </p>
+              <p class="muted">
+                Tip: If you’re a student, include your expected graduation date and availability.
+              </p>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
+      </section>
 
-<script>
-    function switchTab(evt, tabId) {
-        // Hide all content
-        const contents = document.querySelectorAll('.tab-content');
-        contents.forEach(c => c.classList.remove('active'));
+      <!-- RESUME -->
+      <section class="section" id="resume">
+        <div class="container">
+          <div class="section-head">
+            <h2>Resume</h2>
+            <p>
+              Replace the placeholders with your real experience. Keep bullets action-based: “Did X
+              → improved Y by Z.”
+            </p>
+          </div>
 
-        // Remove active class from buttons
-        const buttons = document.querySelectorAll('.tab-btn');
-        buttons.forEach(b => b.classList.remove('active'));
+          <div class="resume-grid">
+            <div class="card">
+              <div class="card-row">
+                <h3>Experience</h3>
+                <a class="small-link" href="resume.pdf" target="_blank" rel="noopener">PDF</a>
+              </div>
 
-        // Show selected tab and highlight button
-        document.getElementById(tabId).classList.add('active');
-        evt.currentTarget.classList.add('active');
-    }
-</script>
+              <div class="timeline">
+                <article class="timeline-item">
+                  <div class="timeline-dot" aria-hidden="true"></div>
+                  <div>
+                    <header class="timeline-head">
+                      <h4>[Job Title] — [Company]</h4>
+                      <div class="timeline-meta">Month YYYY – Month YYYY • City, ST</div>
+                    </header>
+                    <ul>
+                      <li>Built/created/improved ______, resulting in ______.</li>
+                      <li>Collaborated with ______ to ______.</li>
+                      <li>Optimized ______ by __% / reduced time by ______.</li>
+                    </ul>
+                  </div>
+                </article>
 
-</body>
+                <article class="timeline-item">
+                  <div class="timeline-dot" aria-hidden="true"></div>
+                  <div>
+                    <header class="timeline-head">
+                      <h4>[Job Title] — [Company]</h4>
+                      <div class="timeline-meta">Month YYYY – Month YYYY • City, ST</div>
+                    </header>
+                    <ul>
+                      <li>Designed/implemented ______ using ______.</li>
+                      <li>Presented findings to ______; influenced ______.</li>
+                    </ul>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="stack">
+              <div class="card">
+                <h3>Education</h3>
+                <div class="edu">
+                  <div class="edu-row">
+                    <div>
+                      <h4>[School Name]</h4>
+                      <div class="muted">[Degree], [Major]</div>
+                    </div>
+                    <div class="muted">YYYY – YYYY</div>
+                  </div>
+                  <div class="muted">Relevant coursework: ______, ______, ______</div>
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>Skills</h3>
+                <div class="skills">
+                  <div>
+                    <div class="muted small">Languages</div>
+                    <div class="chips">
+                      <span class="chip">C++</span>
+                      <span class="chip">Python</span>
+                      <span class="chip">Java</span>
+                      <span class="chip">JavaScript</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="muted small">Tools</div>
+                    <div class="chips">
+                      <span class="chip">Git</span>
+                      <span class="chip">VS Code</span>
+                      <span class="chip">Linux</span>
+                      <span class="chip">Excel</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="muted small">Strengths</div>
+                    <div class="chips">
+                      <span class="chip">Problem Solving</span>
+                      <span class="chip">Communication</span>
+                      <span class="chip">Teamwork</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>Projects</h3>
+                <div class="project">
+                  <h4>[Project Name]</h4>
+                  <p class="muted">
+                    One-liner: what it is + why it matters. Tech used: ______.
+                  </p>
+                  <ul>
+                    <li>Highlight an outcome or metric.</li>
+                    <li>Highlight your role and what you learned.</li>
+                  </ul>
+                  <div class="project-links">
+                    <a href="#" target="_blank" rel="noopener">GitHub</a>
+                    <a href="#" target="_blank" rel="noopener">Live Demo</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="section" id="contact">
+        <div class="container">
+          <div class="section-head">
+            <h2>Contact</h2>
+            <p>
+              Want to reach out? Email me or use the form. (This form is front-end only; instructions
+              below show how to make it send.)
+            </p>
+          </div>
+
+          <div class="two-col">
+            <div class="card">
+              <h3>Find me</h3>
+              <div class="contact-list">
+                <a class="contact-item" href="mailto:you@email.com">
+                  <span class="contact-label">Email</span>
+                  <span class="contact-value">you@email.com</span>
+                </a>
+                <a class="contact-item" href="https://www.linkedin.com/in/yourname" target="_blank" rel="noopener">
+                  <span class="contact-label">LinkedIn</span>
+                  <span class="contact-value">/in/yourname</span>
+                </a>
+                <a class="contact-item" href="https://github.com/yourname" target="_blank" rel="noopener">
+                  <span class="contact-label">GitHub</span>
+                  <span class="contact-value">@yourname</span>
+                </a>
+              </div>
+
+              <p class="muted small">
+                Optional: add a phone number or Calendly link if you want.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>Message me</h3>
+              <form class="contact-form" id="contactForm">
+                <label>
+                  <span>Name</span>
+                  <input name="name" autocomplete="name" placeholder="Your name" required />
+                </label>
+
+                <label>
+                  <span>Email</span>
+                  <input
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </label>
+
+                <label>
+                  <span>Message</span>
+                  <textarea name="message" rows="5" placeholder="Write your message..." required></textarea>
+                </label>
+
+                <button class="btn primary" type="submit">Send</button>
+                <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
+              </form>
+            </div>
+          </div>
+
+          <footer class="footer">
+            <p>© <span id="year"></span> Your Name. Built with plain HTML/CSS/JS.</p>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>
