@@ -1,345 +1,137 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Personal website — resume, intro, contact." />
-    <title>Your Name — Portfolio</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My PDF Library</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f9;
+            --card-bg: #ffffff;
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-color: #333;
+        }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    <link rel="stylesheet" href="styles.css" />
-    <script defer src="script.js"></script>
-  </head>
+        header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+        h1 {
+            color: var(--primary-color);
+        }
 
-    <header class="site-header" id="top">
-      <div class="container header-inner">
-        <a class="brand" href="#top" aria-label="Go to top">
-          <span class="brand-mark" aria-hidden="true">◆</span>
-          <span class="brand-text">Your Name</span>
-        </a>
+        /* Search Bar Styles */
+        #searchBar {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
 
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-          <span class="sr-only">Open menu</span>
-          <span class="nav-toggle-bars" aria-hidden="true"></span>
-        </button>
+        /* List Styles */
+        #pdf-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 600px;
+        }
 
-        <nav class="site-nav" id="site-nav">
-          <a href="#about">About</a>
-          <a href="#resume">Resume</a>
-          <a href="#contact">Contact</a>
-          <a class="pill" href="#contact">Hire me</a>
-        </nav>
-      </div>
+        .pdf-item {
+            background: var(--card-bg);
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pdf-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .pdf-link {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .download-btn {
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Helper for empty search results */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Document Archive</h1>
+        <input type="text" id="searchBar" placeholder="Search for a document..." onkeyup="filterList()">
     </header>
 
-    <main id="main">
-      <!-- HERO -->
-      <section class="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">Hi, I’m</p>
-            <h1>Your Name</h1>
-            <p class="lead">
-              I’m a <strong>[Your Role]</strong> who builds <strong>[what you build]</strong>.
-              I like solving problems with clean design and practical engineering.
-            </p>
+    <ul id="pdf-list">
+        <li class="pdf-item">
+            <a href="files/example-document.pdf" class="pdf-link" target="_blank">Example Document</a>
+            <a href="files/example-document.pdf" class="download-btn" download>Download</a>
+        </li>
 
-            <div class="hero-actions">
-              <a class="btn primary" href="#resume">View Resume</a>
-              <a class="btn" href="#contact">Contact</a>
-              <a class="btn ghost" href="resume.pdf" target="_blank" rel="noopener">Download PDF</a>
-            </div>
+        <li class="pdf-item">
+            <a href="files/notes-2024.pdf" class="pdf-link" target="_blank">Class Notes 2024</a>
+            <a href="files/notes-2024.pdf" class="download-btn" download>Download</a>
+        </li>
 
-            <div class="hero-meta">
-              <div class="meta-card">
-                <div class="meta-label">Location</div>
-                <div class="meta-value">Houston, TX</div>
-              </div>
-              <div class="meta-card">
-                <div class="meta-label">Email</div>
-                <div class="meta-value">
-                  <a href="mailto:you@email.com">you@email.com</a>
-                </div>
-              </div>
-              <div class="meta-card">
-                <div class="meta-label">Open to</div>
-                <div class="meta-value">Internships / Full-time</div>
-              </div>
-            </div>
-          </div>
+        </ul>
 
-          <div class="hero-card">
-            <div class="avatar" aria-hidden="true">
-              <span>YN</span>
-            </div>
-            <div class="hero-card-body">
-              <h2 class="card-title">Quick intro</h2>
-              <p>
-                Write 2–3 sentences about your focus, what you’re looking for, and what you’re best
-                at. Keep it punchy and friendly.
-              </p>
+    <script>
+        function filterList() {
+            const input = document.getElementById('searchBar');
+            const filter = input.value.toLowerCase();
+            const ul = document.getElementById("pdf-list");
+            const li = ul.getElementsByTagName('li');
 
-              <ul class="bullets">
-                <li>✅ Strength: [e.g., problem-solving, communication]</li>
-                <li>✅ Focus: [e.g., software, engineering, design]</li>
-                <li>✅ Interests: [e.g., systems, AI, web apps]</li>
-              </ul>
-
-              <div class="chips" aria-label="Highlights">
-                <span class="chip">C++</span>
-                <span class="chip">Python</span>
-                <span class="chip">JavaScript</span>
-                <span class="chip">CAD</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="section-divider"></div>
-        </div>
-      </section>
-
-      <!-- ABOUT -->
-      <section class="section" id="about">
-        <div class="container">
-          <div class="section-head">
-            <h2>About</h2>
-            <p>
-              This section is for your longer introduction. Keep it human: what you do, what you
-              care about, and what kind of work you want.
-            </p>
-          </div>
-
-          <div class="two-col">
-            <div class="card">
-              <h3>What I’m good at</h3>
-              <p>
-                Add a short paragraph describing your strengths (projects, teamwork, leadership,
-                technical skills). Mention results when possible.
-              </p>
-              <ul class="checklist">
-                <li>Building reliable, readable solutions</li>
-                <li>Working well in teams and communicating clearly</li>
-                <li>Learning fast and shipping improvements</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h3>What I’m looking for</h3>
-              <p>
-                Describe the roles you want (internship, entry-level, freelance), and the types of
-                problems you want to work on.
-              </p>
-              <p class="muted">
-                Tip: If you’re a student, include your expected graduation date and availability.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- RESUME -->
-      <section class="section" id="resume">
-        <div class="container">
-          <div class="section-head">
-            <h2>Resume</h2>
-            <p>
-              Replace the placeholders with your real experience. Keep bullets action-based: “Did X
-              → improved Y by Z.”
-            </p>
-          </div>
-
-          <div class="resume-grid">
-            <div class="card">
-              <div class="card-row">
-                <h3>Experience</h3>
-                <a class="small-link" href="resume.pdf" target="_blank" rel="noopener">PDF</a>
-              </div>
-
-              <div class="timeline">
-                <article class="timeline-item">
-                  <div class="timeline-dot" aria-hidden="true"></div>
-                  <div>
-                    <header class="timeline-head">
-                      <h4>[Job Title] — [Company]</h4>
-                      <div class="timeline-meta">Month YYYY – Month YYYY • City, ST</div>
-                    </header>
-                    <ul>
-                      <li>Built/created/improved ______, resulting in ______.</li>
-                      <li>Collaborated with ______ to ______.</li>
-                      <li>Optimized ______ by __% / reduced time by ______.</li>
-                    </ul>
-                  </div>
-                </article>
-
-                <article class="timeline-item">
-                  <div class="timeline-dot" aria-hidden="true"></div>
-                  <div>
-                    <header class="timeline-head">
-                      <h4>[Job Title] — [Company]</h4>
-                      <div class="timeline-meta">Month YYYY – Month YYYY • City, ST</div>
-                    </header>
-                    <ul>
-                      <li>Designed/implemented ______ using ______.</li>
-                      <li>Presented findings to ______; influenced ______.</li>
-                    </ul>
-                  </div>
-                </article>
-              </div>
-            </div>
-
-            <div class="stack">
-              <div class="card">
-                <h3>Education</h3>
-                <div class="edu">
-                  <div class="edu-row">
-                    <div>
-                      <h4>[School Name]</h4>
-                      <div class="muted">[Degree], [Major]</div>
-                    </div>
-                    <div class="muted">YYYY – YYYY</div>
-                  </div>
-                  <div class="muted">Relevant coursework: ______, ______, ______</div>
-                </div>
-              </div>
-
-              <div class="card">
-                <h3>Skills</h3>
-                <div class="skills">
-                  <div>
-                    <div class="muted small">Languages</div>
-                    <div class="chips">
-                      <span class="chip">C++</span>
-                      <span class="chip">Python</span>
-                      <span class="chip">Java</span>
-                      <span class="chip">JavaScript</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div class="muted small">Tools</div>
-                    <div class="chips">
-                      <span class="chip">Git</span>
-                      <span class="chip">VS Code</span>
-                      <span class="chip">Linux</span>
-                      <span class="chip">Excel</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div class="muted small">Strengths</div>
-                    <div class="chips">
-                      <span class="chip">Problem Solving</span>
-                      <span class="chip">Communication</span>
-                      <span class="chip">Teamwork</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <h3>Projects</h3>
-                <div class="project">
-                  <h4>[Project Name]</h4>
-                  <p class="muted">
-                    One-liner: what it is + why it matters. Tech used: ______.
-                  </p>
-                  <ul>
-                    <li>Highlight an outcome or metric.</li>
-                    <li>Highlight your role and what you learned.</li>
-                  </ul>
-                  <div class="project-links">
-                    <a href="#" target="_blank" rel="noopener">GitHub</a>
-                    <a href="#" target="_blank" rel="noopener">Live Demo</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-divider"></div>
-        </div>
-      </section>
-
-      <!-- CONTACT -->
-      <section class="section" id="contact">
-        <div class="container">
-          <div class="section-head">
-            <h2>Contact</h2>
-            <p>
-              Want to reach out? Email me or use the form. (This form is front-end only; instructions
-              below show how to make it send.)
-            </p>
-          </div>
-
-          <div class="two-col">
-            <div class="card">
-              <h3>Find me</h3>
-              <div class="contact-list">
-                <a class="contact-item" href="mailto:you@email.com">
-                  <span class="contact-label">Email</span>
-                  <span class="contact-value">you@email.com</span>
-                </a>
-                <a class="contact-item" href="https://www.linkedin.com/in/yourname" target="_blank" rel="noopener">
-                  <span class="contact-label">LinkedIn</span>
-                  <span class="contact-value">/in/yourname</span>
-                </a>
-                <a class="contact-item" href="https://github.com/yourname" target="_blank" rel="noopener">
-                  <span class="contact-label">GitHub</span>
-                  <span class="contact-value">@yourname</span>
-                </a>
-              </div>
-
-              <p class="muted small">
-                Optional: add a phone number or Calendly link if you want.
-              </p>
-            </div>
-
-            <div class="card">
-              <h3>Message me</h3>
-              <form class="contact-form" id="contactForm">
-                <label>
-                  <span>Name</span>
-                  <input name="name" autocomplete="name" placeholder="Your name" required />
-                </label>
-
-                <label>
-                  <span>Email</span>
-                  <input
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    placeholder="you@example.com"
-                    required
-                  />
-                </label>
-
-                <label>
-                  <span>Message</span>
-                  <textarea name="message" rows="5" placeholder="Write your message..." required></textarea>
-                </label>
-
-                <button class="btn primary" type="submit">Send</button>
-                <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
-              </form>
-            </div>
-          </div>
-
-          <footer class="footer">
-            <p>© <span id="year"></span> Your Name. Built with plain HTML/CSS/JS.</p>
-          </footer>
-        </div>
-      </section>
-    </main>
-  </body>
+            for (let i = 0; i < li.length; i++) {
+                const a = li[i].getElementsByClassName("pdf-link")[0];
+                const txtValue = a.textContent || a.innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    li[i].classList.remove("hidden");
+                } else {
+                    li[i].classList.add("hidden");
+                }
+            }
+        }
+    </script>
+</body>
 </html>
