@@ -24,44 +24,81 @@
 
         /* HEADER STYLING */
         header {
-            /* UPDATED: Uses banner.png */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('banner.png');
+            position: relative;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            
             color: white;
-            padding: 4rem 1rem;
+            padding: 3rem 1rem;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        h1 { 
-            margin: 0; 
-            font-size: 3rem; 
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        /* Dynamic Background Overlay */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6); /* Darkens image */
+            z-index: 1;
         }
 
-        .search-container {
-            margin-top: 25px;
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 { margin: 0; font-size: 3rem; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
+        p { font-size: 1.2rem; color: #ddd; margin-top: 5px; }
+
+        /* CONTROLS BAR (Search + Filter) */
+        .controls {
+            max-width: 800px;
+            margin: -25px auto 30px auto;
+            position: relative;
+            z-index: 3;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
         }
 
         #search {
-            padding: 15px 25px;
-            width: 100%;
-            max-width: 500px;
-            border-radius: 30px;
-            border: none;
+            flex: 1;
+            padding: 12px 20px;
+            min-width: 200px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
             font-size: 16px;
             outline: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
+        /* Filter Buttons */
+        .filter-btn {
+            padding: 10px 15px;
+            border: none;
+            background: #eef2f5;
+            color: #333;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* MAIN GRID */
         main {
             max-width: 1200px;
-            margin: 40px auto;
+            margin: 0 auto 50px auto;
             padding: 0 20px;
         }
 
@@ -85,71 +122,34 @@
             color: inherit;
             position: relative;
             overflow: hidden;
+            animation: fadeIn 0.5s ease;
         }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--hover-shadow);
-        }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--hover-shadow); }
+        .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background-color: #e74c3c; }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 6px;
-            background-color: #e74c3c;
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            line-height: 1.4;
-            margin-bottom: 10px;
-            word-wrap: break-word;
-        }
-
-        .card-meta {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-top: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .icon-pdf {
-            width: 40px;
-            height: 40px;
-            background: #ffebeb;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #e74c3c;
-            font-weight: bold;
-            font-size: 12px;
-            margin-bottom: 15px;
-        }
-
-        #loading {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-top: 50px;
-            font-weight: bold;
-        }
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; word-wrap: break-word; }
+        .card-meta { font-size: 0.85rem; color: var(--text-secondary); margin-top: auto; display: flex; justify-content: space-between; }
+        .icon-pdf { width: 40px; height: 40px; background: #ffebeb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #e74c3c; font-weight: bold; font-size: 12px; margin-bottom: 15px; }
+        #loading { text-align: center; font-size: 1.2rem; color: var(--text-secondary); margin-top: 50px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>My Archive</h1>
-        <div class="search-container">
-            <input type="text" id="search" placeholder="Search documents..." onkeyup="filterDocs()">
+    <header id="main-header">
+        <div class="header-content">
+            <h1 id="site-title">Loading...</h1>
+            <p id="site-subtitle"></p>
         </div>
     </header>
+
+    <div class="controls">
+        <input type="text" id="search" placeholder="Search documents..." onkeyup="filterDocs()">
+        <div id="filter-container">
+            </div>
+    </div>
 
     <main>
         <div id="loading">Scanning library...</div>
@@ -157,73 +157,153 @@
     </main>
 
     <script>
-        // ==========================================
-        // CONFIGURATION
-        // ==========================================
-        const USERNAME = 'SlothUS'; 
-        const REPO_NAME = 'SlothUS.github.io';
-        const FOLDER_NAME = 'files'; 
-        // ==========================================
+        // =========================================================
+        //  ADMIN BOARD / CONFIGURATION ZONE
+        //  (Edit these values to change your website!)
+        // =========================================================
+        
+        const CONFIG = {
+            // 1. REPO SETTINGS
+            username:   'SlothUS', 
+            repoName:   'SlothUS.github.io',
+            folderName: 'files',       // Folder where PDFs are stored
+            
+            // 2. VISUAL SETTINGS
+            title:      "My Archive",      // The big title
+            subtitle:   "Personal Library",// The text under the title
+            bannerImage: "banner.png",     // Background image file name
+            
+            // 3. CATEGORY SYSTEM
+            // If a filename contains these words, it creates a filter button.
+            // Example: A file named "Math-HW1.pdf" will show up under "Math"
+            categories: ["Math", "Physics", "Personal", "Work"],
 
-        const grid = document.getElementById('pdf-grid');
-        const loading = document.getElementById('loading');
+            // 4. CUSTOM RENAMER
+            // Want to rename a file without changing it on GitHub?
+            // Format: "original_filename.pdf" : "New Pretty Name",
+            customNames: {
+                "7.pdf": "Calculus Quiz 7",
+                "image_585.pdf": "Statics Homework 3",
+                // Add more lines here following the pattern
+            }
+        };
+
+        // =========================================================
+        //  END OF ADMIN ZONE (Do not touch code below this line)
+        // =========================================================
+
+        // Apply Visual Settings immediately
+        document.getElementById('site-title').innerText = CONFIG.title;
+        document.getElementById('site-subtitle').innerText = CONFIG.subtitle;
+        document.getElementById('main-header').style.backgroundImage = `url('${CONFIG.bannerImage}')`;
+        document.title = CONFIG.title;
+
+        // Setup Filters
+        const filterContainer = document.getElementById('filter-container');
+        let allPDFs = []; // Store files globally
+
+        function setupFilters() {
+            // Create "All" button
+            filterContainer.innerHTML = `<button class="filter-btn active" onclick="applyCategory('All', this)">All</button>`;
+            
+            // Create buttons for each category in CONFIG
+            CONFIG.categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.innerText = cat;
+                btn.onclick = () => applyCategory(cat, btn);
+                filterContainer.appendChild(btn);
+            });
+        }
 
         async function fetchPDFs() {
+            const grid = document.getElementById('pdf-grid');
+            const loading = document.getElementById('loading');
+
             try {
-                // Construct the API URL
-                const apiUrl = `https://api.github.com/repos/${USERNAME}/${REPO_NAME}/contents/${FOLDER_NAME}`;
-                
+                const apiUrl = `https://api.github.com/repos/${CONFIG.username}/${CONFIG.repoName}/contents/${CONFIG.folderName}`;
                 const response = await fetch(apiUrl);
-                
-                // ERROR HANDLING: Why is it stuck?
-                if (response.status === 404) throw new Error(`Folder "files" not found. Check your repo structure.`);
-                if (response.status === 403) throw new Error('API Rate Limit Exceeded. Wait 1 hour or try different wifi.');
-                if (!response.ok) throw new Error(`GitHub API Error: ${response.status}`);
+
+                if (!response.ok) throw new Error(`Error ${response.status}: Check Config Zone username/repo`);
                 
                 const files = await response.json();
-                const pdfs = files.filter(file => file.name.toLowerCase().endsWith('.pdf'));
+                allPDFs = files.filter(file => file.name.toLowerCase().endsWith('.pdf'));
 
                 loading.style.display = 'none';
-
-                if (pdfs.length === 0) {
-                    grid.innerHTML = '<p style="text-align:center; width:100%">Folder found, but no PDF files inside.</p>';
-                    return;
-                }
-
-                pdfs.forEach(pdf => {
-                    const card = document.createElement('a');
-                    card.className = 'card';
-                    card.href = pdf.download_url;
-                    card.target = '_blank';
-                    
-                    const displayName = pdf.name.replace('.pdf', '').replace(/[-_]/g, ' ');
-                    const sizeKB = (pdf.size / 1024).toFixed(1) + ' KB';
-
-                    card.innerHTML = `
-                        <div class="icon-pdf">PDF</div>
-                        <div class="card-title">${displayName}</div>
-                        <div class="card-meta">
-                            <span>${sizeKB}</span>
-                            <span>Download &rarr;</span>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
+                setupFilters();
+                renderDocs(allPDFs); // Render all initially
 
             } catch (error) {
-                console.error(error);
-                loading.innerText = '⚠️ Error: ' + error.message;
+                loading.innerText = '⚠️ ' + error.message;
                 loading.style.color = 'red';
             }
         }
 
+        function renderDocs(filesToRender) {
+            const grid = document.getElementById('pdf-grid');
+            grid.innerHTML = ''; // Clear current
+
+            if (filesToRender.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No documents found matching this filter.</p>';
+                return;
+            }
+
+            filesToRender.forEach(pdf => {
+                const card = document.createElement('a');
+                card.className = 'card';
+                card.href = pdf.download_url;
+                card.target = '_blank';
+                
+                // 1. Check Custom Names first
+                let displayName = CONFIG.customNames[pdf.name];
+
+                // 2. If no custom name, auto-clean the filename
+                if (!displayName) {
+                    displayName = pdf.name
+                        .replace('.pdf', '')
+                        .replace(/[-_]/g, ' '); // Turn "math-hw" into "math hw"
+                }
+
+                const sizeKB = (pdf.size / 1024).toFixed(1) + ' KB';
+
+                card.innerHTML = `
+                    <div class="icon-pdf">PDF</div>
+                    <div class="card-title">${displayName}</div>
+                    <div class="card-meta">
+                        <span>${sizeKB}</span>
+                        <span>Download &rarr;</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Logic for Filter Buttons
+        function applyCategory(category, btnElement) {
+            // Update Visuals
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Filter Data
+            if (category === 'All') {
+                renderDocs(allPDFs);
+            } else {
+                // Show file if its name contains the category (case insensitive)
+                const filtered = allPDFs.filter(pdf => 
+                    pdf.name.toLowerCase().includes(category.toLowerCase())
+                );
+                renderDocs(filtered);
+            }
+        }
+
+        // Logic for Search Bar
         function filterDocs() {
-            const search = document.getElementById('search').value.toLowerCase();
+            const query = document.getElementById('search').value.toLowerCase();
             const cards = document.getElementsByClassName('card');
 
             Array.from(cards).forEach(card => {
                 const title = card.querySelector('.card-title').innerText.toLowerCase();
-                if (title.includes(search)) {
+                if (title.includes(query)) {
                     card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
