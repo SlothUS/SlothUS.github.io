@@ -26,20 +26,27 @@
         header {
             position: relative;
             background-size: cover;
-            background-position: center;
+            
+            /* --- IMAGE POSITIONING --- */
+            /* "center" centers it left-to-right. */
+            /* "30%" moves it up/down. */
+            /* LOWER % = Shows more top (Moves picture DOWN) */
+            /* HIGHER % = Shows more bottom (Moves picture UP) */
+            background-position: center 30%; 
             background-repeat: no-repeat;
+            
             color: white;
             padding: 3rem 1rem;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        /* Dynamic Background Overlay */
+        /* Dark Overlay to make text readable */
         header::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.6); /* Darkens image */
+            background: rgba(0, 0, 0, 0.5); 
             z-index: 1;
         }
 
@@ -51,7 +58,7 @@
         h1 { margin: 0; font-size: 3rem; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
         p { font-size: 1.2rem; color: #ddd; margin-top: 5px; }
 
-        /* CONTROLS BAR (Search + Filter) */
+        /* CONTROLS BAR */
         .controls {
             max-width: 800px;
             margin: -25px auto 30px auto;
@@ -78,7 +85,6 @@
             outline: none;
         }
 
-        /* Filter Buttons */
         .filter-btn {
             padding: 10px 15px;
             border: none;
@@ -106,6 +112,15 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
+        }
+
+        /* Centered Message Class */
+        .empty-message {
+            grid-column: 1 / -1; /* Spans all columns */
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-top: 40px;
         }
 
         .card {
@@ -147,8 +162,7 @@
 
     <div class="controls">
         <input type="text" id="search" placeholder="Search documents..." onkeyup="filterDocs()">
-        <div id="filter-container">
-            </div>
+        <div id="filter-container"></div>
     </div>
 
     <main>
@@ -159,28 +173,23 @@
     <script>
         // =========================================================
         //  ADMIN BOARD / CONFIGURATION ZONE
-        //  (Edit these values to change your website!)
         // =========================================================
         
         const CONFIG = {
             // 1. REPO SETTINGS
             username:   'SlothUS', 
             repoName:   'SlothUS.github.io',
-            folderName: 'files',       // Folder where PDFs are stored
+            folderName: 'files',       
             
             // 2. VISUAL SETTINGS
-            title:      "My Archive",      // The big title
-            subtitle:   "Personal Library",// The text under the title
-            bannerImage: "banner.png",     // Background image file name
+            title:      "My Archive",      
+            subtitle:   "Personal Library",
+            bannerImage: "banner.png",     
             
             // 3. CATEGORY SYSTEM
-            // If a filename contains these words, it creates a filter button.
-            // Example: A file named "Math-HW1.pdf" will show up under "Math"
-            categories: ["Math", "Physics", "Personal", "Work"],
+            categories: ["EMath", "Statics", "Graphics"],
 
             // 4. CUSTOM RENAMER
-            // Want to rename a file without changing it on GitHub?
-            // Format: "original_filename.pdf" : "New Pretty Name",
             customNames: {
                 "7.pdf": "Calculus Quiz 7",
                 "image_585.pdf": "Statics Homework 3",
@@ -189,24 +198,20 @@
         };
 
         // =========================================================
-        //  END OF ADMIN ZONE (Do not touch code below this line)
+        //  END OF ADMIN ZONE
         // =========================================================
 
-        // Apply Visual Settings immediately
         document.getElementById('site-title').innerText = CONFIG.title;
         document.getElementById('site-subtitle').innerText = CONFIG.subtitle;
         document.getElementById('main-header').style.backgroundImage = `url('${CONFIG.bannerImage}')`;
         document.title = CONFIG.title;
 
-        // Setup Filters
         const filterContainer = document.getElementById('filter-container');
-        let allPDFs = []; // Store files globally
+        let allPDFs = []; 
 
         function setupFilters() {
-            // Create "All" button
             filterContainer.innerHTML = `<button class="filter-btn active" onclick="applyCategory('All', this)">All</button>`;
             
-            // Create buttons for each category in CONFIG
             CONFIG.categories.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.className = 'filter-btn';
@@ -231,7 +236,7 @@
 
                 loading.style.display = 'none';
                 setupFilters();
-                renderDocs(allPDFs); // Render all initially
+                renderDocs(allPDFs); 
 
             } catch (error) {
                 loading.innerText = '⚠️ ' + error.message;
@@ -241,10 +246,11 @@
 
         function renderDocs(filesToRender) {
             const grid = document.getElementById('pdf-grid');
-            grid.innerHTML = ''; // Clear current
+            grid.innerHTML = ''; 
 
             if (filesToRender.length === 0) {
-                grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No documents found matching this filter.</p>';
+                // Now uses the special class to center the message
+                grid.innerHTML = '<div class="empty-message">No documents found matching this filter.</div>';
                 return;
             }
 
@@ -254,14 +260,9 @@
                 card.href = pdf.download_url;
                 card.target = '_blank';
                 
-                // 1. Check Custom Names first
                 let displayName = CONFIG.customNames[pdf.name];
-
-                // 2. If no custom name, auto-clean the filename
                 if (!displayName) {
-                    displayName = pdf.name
-                        .replace('.pdf', '')
-                        .replace(/[-_]/g, ' '); // Turn "math-hw" into "math hw"
+                    displayName = pdf.name.replace('.pdf', '').replace(/[-_]/g, ' '); 
                 }
 
                 const sizeKB = (pdf.size / 1024).toFixed(1) + ' KB';
@@ -278,17 +279,13 @@
             });
         }
 
-        // Logic for Filter Buttons
         function applyCategory(category, btnElement) {
-            // Update Visuals
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btnElement.classList.add('active');
 
-            // Filter Data
             if (category === 'All') {
                 renderDocs(allPDFs);
             } else {
-                // Show file if its name contains the category (case insensitive)
                 const filtered = allPDFs.filter(pdf => 
                     pdf.name.toLowerCase().includes(category.toLowerCase())
                 );
@@ -296,19 +293,32 @@
             }
         }
 
-        // Logic for Search Bar
         function filterDocs() {
             const query = document.getElementById('search').value.toLowerCase();
             const cards = document.getElementsByClassName('card');
+            let hasVisible = false;
 
             Array.from(cards).forEach(card => {
                 const title = card.querySelector('.card-title').innerText.toLowerCase();
                 if (title.includes(query)) {
                     card.style.display = 'flex';
+                    hasVisible = true;
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            // Handle "No results" for search bar too
+            const grid = document.getElementById('pdf-grid');
+            const existingMsg = document.querySelector('.empty-message');
+            if (existingMsg) existingMsg.remove();
+
+            if (!hasVisible && cards.length > 0) {
+                 const msg = document.createElement('div');
+                 msg.className = 'empty-message';
+                 msg.innerText = "No documents found matching this search.";
+                 grid.appendChild(msg);
+            }
         }
 
         fetchPDFs();
